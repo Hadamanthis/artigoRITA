@@ -5,6 +5,8 @@ import cv2
 BENIGNO = 'benignos'
 MALIGNO = 'malignos'
 
+folder = '/home/geovane/artigoRITA/base/base_simara_realce_log'
+
 def read_dataset(folder):
 
 	print('> Loading', folder) 
@@ -52,7 +54,34 @@ def read_dataset(folder):
 			#cv2.waitKey(0)
 			yield img, INDEX
 		
-	
+
+def read_imgdataset(folder):
+
+	print('> Loading', folder) 
+
+	for c in os.listdir(folder):
+
+		# Label da classe
+		if (c == BENIGNO):
+			INDEX = 0
+		elif (c == MALIGNO):
+			INDEX = 1
+		
+		class_path = folder + '/' + c
+		
+		print(class_path)
+		
+		# Percorrendo todos os individuos presentes na classe
+		for f in os.listdir(class_path):
+		
+			file_name = class_path + '/' + f
+
+			print('> Reading:', file_name)
+
+			img = cv2.imread(file_name, 0)
+			
+			yield img, INDEX
+
 if __name__ == '__main__':
 	pass
 	

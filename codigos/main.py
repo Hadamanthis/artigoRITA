@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from techniques import LBP, CS_LBP, LQP, CLBP
 from crop import cartesian_cut, diagonal_cut, complete_cut, circular_cut, eliptical_cut
-from dataset import read_dataset
+from dataset import read_dataset, read_imgdataset
 
 # Falta salvar os valores em um arquivo
 		
@@ -16,16 +16,17 @@ from dataset import read_dataset
 			
 			# Apliquei um downsize com fator de redução 3 em ambas as dimensões
 
-TECHNIQUE = 3 # 1- LBP/CS-LBP, 2 - LQP, 3 - CLBP
+TECHNIQUE = 1 # 1- LBP/CS-LBP, 2 - LQP, 3 - CLBP
 
-n_bins = [16, 32, 64, 128, 256]
-folder = '/home/geovane/Transferências/base_simara_sem_melhoria'
+#n_bins = [16, 32, 64, 128, 256]
+n_bins = [256]
+folder = '/home/geovane/artigoRITA/base/base_simara_realce_log'
 	
-imgs = read_dataset(folder)
+imgs = read_imgdataset(folder)
 	
 for frame, label in imgs:
 
-	frame = cv2.resize(frame, None, fx=1/3, fy=1/3)
+	#frame = cv2.resize(frame, None, fx=1/3, fy=1/3)
 
 	#subimgs = eliptical_cut(frame, 2)
 	
@@ -35,7 +36,7 @@ for frame, label in imgs:
 	
 		if (TECHNIQUE == 1):
 			
-			output_file_path = '/home/geovane/CS_LBP_%sbins.txt' % (b)
+			output_file_path = '/home/geovane/LBP_%sbins.txt' % (b)
 			print(output_file_path)
 			
 			output_file = open(output_file_path, 'a')
@@ -47,7 +48,7 @@ for frame, label in imgs:
 			for img in subimgs:
 			
 				# Apply LBP/CS-LBP
-				result = CS_LBP(img)
+				result = LBP(img)
 				
 				hist, bins = np.histogram(result, b)
 				hist = hist/float(sum(hist))

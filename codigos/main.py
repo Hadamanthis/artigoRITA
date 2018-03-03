@@ -16,11 +16,10 @@ from dataset import read_dataset, read_imgdataset
 			
 			# Apliquei um downsize com fator de redução 3 em ambas as dimensões
 
-TECHNIQUE = 1 # 1- LBP/CS-LBP, 2 - LQP, 3 - CLBP
+TECHNIQUE = 3 # 1- LBP/CS-LBP, 2 - LQP, 3 - CLBP
 
-#n_bins = [16, 32, 64, 128, 256]
-n_bins = [256]
-folder = '/home/geovane/artigoRITA/base/base_simara_realce_log'
+n_bins = [16, 32, 64, 128]
+folder = '/mnt/DADOS/Estudos/Computação/Mestrado/artigoRITA/artigoRITA/base/base_simara_realce_log'
 	
 imgs = read_imgdataset(folder)
 	
@@ -36,7 +35,7 @@ for frame, label in imgs:
 	
 		if (TECHNIQUE == 1):
 			
-			output_file_path = '/home/geovane/LBP_%sbins.txt' % (b)
+			output_file_path = '/mnt/DADOS/Estudos/Computação/Mestrado/artigoRITA/artigoRITA/resultados/histograma/CS_LBP_%sbins.txt' % (b)
 			print(output_file_path)
 			
 			output_file = open(output_file_path, 'a')
@@ -48,7 +47,7 @@ for frame, label in imgs:
 			for img in subimgs:
 			
 				# Apply LBP/CS-LBP
-				result = LBP(img)
+				result = CS_LBP(img)
 				
 				hist, bins = np.histogram(result, b)
 				hist = hist/float(sum(hist))
@@ -64,7 +63,7 @@ for frame, label in imgs:
 					
 		elif (TECHNIQUE == 2):
 		
-			output_file_path = '/home/geovane/LQP_1_10_%sbins.txt' % (b)
+			output_file_path = '/mnt/DADOS/Estudos/Computação/Mestrado/artigoRITA/artigoRITA/resultados/histograma/LQP_2_5_%sbins.txt' % (b)
 			print(output_file_path)
 			
 			output_file = open(output_file_path, 'a')
@@ -76,7 +75,7 @@ for frame, label in imgs:
 			for img in subimgs:
 			
 				# Apply LQP
-				result1, result2, result3, result4 = LQP(img, 1, 10)
+				result1, result2, result3, result4 = LQP(img, 2, 5)
 				
 				hist1, bins = np.histogram(result1, b)
 				hist2, bins = np.histogram(result2, b)
@@ -97,7 +96,7 @@ for frame, label in imgs:
 			
 		else:
 
-			output_file_path = '/home/geovane/CLBP_%sbins.txt' % (b)
+			output_file_path = '/mnt/DADOS/Estudos/Computação/Mestrado/artigoRITA/artigoRITA/resultados/histograma/CLBP_%sbins.txt' % (b)
 			print(output_file_path)
 			
 			output_file = open(output_file_path, 'a')

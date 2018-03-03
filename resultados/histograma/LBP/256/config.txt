@@ -1,0 +1,4 @@
+PERCENTUAL;80;80;10;10
+LBP_256bins.txt -w1 1
+
+
